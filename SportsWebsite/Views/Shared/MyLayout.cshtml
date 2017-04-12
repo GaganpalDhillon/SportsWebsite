@@ -1,0 +1,21 @@
+﻿
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@RenderSection("TitleContent",false)</title>
+    @RenderSection("HeaderSection", false)
+</head>
+<body>
+    <div id="mainDiv" style="height:1000px; width:1000px;margin:auto;">
+        @Html.Partial("Header")
+        <div>
+            @RenderSection("ContentBody", false)
+        </div>
+        @Html.Partial("Footer")
+    </div>
+</body>
+</html>

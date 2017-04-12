@@ -1,0 +1,52 @@
+﻿<html>
+<head>
+    <title> </title>
+        <style>
+            ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+    border-bottom:solid;
+    border-bottom-color:yellow;
+}
+        </style>
+   
+</head>
+<body>
+    <div id="topDiv" style="height:250px;width:1000px;background-color:blue;">
+        <img src="~/banner1.png" alt="banner" style="width:800px;" />
+        <ul>
+            <li><a href="#home" onclick="myFunction()">Home</a></li>
+            <li>@Html.ActionLink("Football","Football","Home")</li>
+            <li><a href="#formula1">Formula1</a></li>
+            <li><a href="#cricket">Cricket</a></li>
+            <li><a href="#tennis">Tennis</a></li>
+            <li><a href="#athletics">Athletics</a></li>
+        </ul>
+    <p id="demo"></p>
+        </div>
+    <script>
+        function myFunction() {
+            document.getElementById("demo").innerHTML = "hello God";
+        }
+    </script>
+</body>
+</html>
