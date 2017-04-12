@@ -149,6 +149,7 @@
     <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Home\Sports.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -159,7 +160,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Login\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
