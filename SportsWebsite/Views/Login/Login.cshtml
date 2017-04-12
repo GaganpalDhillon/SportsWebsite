@@ -1,1 +1,57 @@
-﻿
+﻿@model SportsWebsite.Models.Login
+@{
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+@section TitleContent{
+    MyView
+}
+@section ContentBody{
+@using (Html.BeginForm())
+{
+    <div id="secondDiv" style="height:410px;width:1000px;background-color:red;">
+        <div id="introDiv" style="height:400px;width:600px;background-color:antiquewhite;float:left;margin-left:20px;margin-top:5px;">
+          
+             <table id="Table" border="0" cellpadding="1" cellspacing="1" style="width:65%">
+                <tr>
+                    <td>
+                        @Html.ValueFor(m => m.Message)
+                    </td>
+                </tr>
+                 <tr>
+                     <td>
+                         Login
+                         <table border="0" cellpadding="1"cellspacing="1"stlye="width:90%">
+                             <tr>
+                                 <td colspan="3">
+                                     <hr style="border-color:#0000FF";border-widht:3px"/>
+                                 </td>
+                             </tr>
+                             <tr>
+                                 <td colspan="3">
+                                     <strong><font color="#000099" style="background-color:#FFFF66">Existing Customers</font></strong>
+                                Please Login
+                                  </td>
+                             </tr>
+                             <tr>
+                                 <td colspan="3"></td>
+                             </tr>
+                             <tr>
+                                 <align="right">
+
+                                
+                             </tr>
+                         </table>
+                     </td>
+                 </tr>
+            </table>
+           
+        </div>
+
+        <div id="whatNewDiv" style="height:400px;width:300px;background-color:beige;float:right;margin-top:5px;margin-right:20px;"></div>
+    </div>
+    <div id="bottomDiv" style="height:250px;width:1000px;background-color:hotpink;">
+
+    </div>
+
+    }
+}
