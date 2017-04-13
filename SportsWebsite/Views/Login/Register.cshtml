@@ -1,0 +1,209 @@
+﻿@model SportsWebsite.Models.RegistrationModel
+@{
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+@section TitleContent{
+    Register
+}
+@section ContentBody{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $(".wizardStep:first").fadeIn();    // show first step
+
+            // attach back button handler, hide the first step
+            $("#btnBack").hide().click(function () {
+                var step = $("wizardStep:visible");     // get current step
+                if (step.prev().hasClass("wizardStep")) {       // is there any previous steps
+
+                    step.hide().prev().fadeIn();            // show it and hide current
+
+                    // disable the back button
+                    if (!step.prev().prev().hasClass("wizardStep"))
+                        $("btnBack").hide();
+                }
+                $("#btnBack").val = "Next";
+            });
+
+            // attach next button handler
+            $("#btnNext").click(function () {
+
+                var step = $("wizardStep:visible");
+                var validator = $("form").validate();
+                var error = false;
+
+                step.find("input").each(function () {
+                    if (!validator.element(this))   // validate every input element inside this step
+                        anyError = true;
+                });
+
+                if (error)
+                    return false;
+
+                if (step.next().hasClass("confirm")) { // is next wizardStep confirm?
+                    // show confirmation asynchronously
+                    $("#btnNext").val("Finish");
+                    $.post("/home/confirm", $("form").serialize(), function (r) {
+                        // inject response in confirmation step
+                        $(".wizardStep.confirm").html(r);
+                    });
+                }
+
+                if (step.next().hasClass("wizardStep")) { // is there any next step?
+                    step.hide().next().fadeIn();  // hide current step, show next
+                    $("#btnBack").show();   // show backStep button
+                }
+                else { // this is last step, submit form
+                    $("form").submit();
+                }
+            });
+        });
+    </script>
+    @using (Html.BeginForm())
+    {
+        <div id="secondDiv" style="height:660px;width:1000px;background-color:red;">
+            <div id="introDiv" style="height:620px;width:600px;background-color:antiquewhite;float:left;margin-left:20px;margin-top:10px;">
+
+                <h3><a style="color:blueviolet">Register</a></h3>
+                <table style="width:100%;border-collapse:collapse;white-space:nowrap;">
+
+                    <tr>
+                        <td colspan="2">
+                           
+                            <hr style="border-color:#0000FF" ;border-width:3px" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            @Html.DisplayNameFor(m => m.FirstName)
+                        </td>
+                        <td>
+                            &nbsp;@Html.TextBoxFor(m => m.FirstName)
+                            &nbsp;
+                        </td>
+                        <td width="100%">
+                            @Html.ValidationMessageFor(m => m.FirstName)
+                        </td>
+                    </tr>
+                   
+                    <tr>
+                        <td align="right">
+                            @Html.DisplayNameFor(m => m.LastName)
+                        </td>
+                        <td>
+                            &nbsp;@Html.TextBoxFor(m => m.LastName)
+                        </td>
+                        
+                        <td>
+                            @Html.ValidationMessageFor(m => m.LastName)
+                        </td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <td align="right">
+                            @Html.DisplayNameFor(m => m.StreetAddress)
+                        </td>
+                        <td>
+                            &nbsp;@Html.TextBoxFor(m => m.StreetAddress)
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(m => m.StreetAddress)
+                        </td>
+                    </tr>
+
+                    <tr></tr>
+
+                    <tr>
+                        <td align="right">
+                            @Html.DisplayNameFor(m => m.Email)
+                        </td>
+                        <td>
+                            &nbsp;@Html.TextBoxFor(m => m.Email)
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(m => m.Email)
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td align="right">
+                            @Html.DisplayNameFor(m => m.UserName)
+                        </td>
+                        <td>
+                            &nbsp;@Html.TextBoxFor(m => m.UserName)
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(m => m.UserName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            @Html.DisplayNameFor(m => m.Password)
+                        </td>
+                        <td>
+                            &nbsp;@Html.PasswordFor(m => m.Password)
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            @Html.DisplayNameFor(m => m.ConfirmPwd)
+                        </td>
+                        <td>
+                            &nbsp;@Html.PasswordFor(m => m.ConfirmPwd)
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(m => m.ConfirmPwd)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            @Html.DisplayNameFor(m => m.PasswordHintQ)
+                        </td>
+                        <td>
+                            &nbsp;@Html.TextBoxFor(m => m.PasswordHintQ)
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(m => m.PasswordHintQ)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            @Html.DisplayNameFor(m => m.PasswordHintA)
+                        </td>
+                        <td>
+                            &nbsp;@Html.TextBoxFor(m => m.PasswordHintA)
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(m => m.PasswordHintA)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="submit" value="Register" id="btnRegister" name="btnRegister" />
+                                        </td>
+                                        <td>
+                                            <input type="reset" value="Reset" id="btnResetReg" name="btnResetReg" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    }
+
+}
