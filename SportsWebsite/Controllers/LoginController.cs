@@ -11,7 +11,11 @@ namespace SportsWebsite.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            return View();
+            return View("Login");
+        }
+        public ActionResult Register()
+        {
+            return View("Register");
         }
     }
 }
