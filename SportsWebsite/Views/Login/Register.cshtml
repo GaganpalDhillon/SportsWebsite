@@ -64,14 +64,14 @@
     @using (Html.BeginForm())
     {
         <div id="secondDiv" style="height:660px;width:1000px;background-color:red;">
-            <div id="introDiv" style="height:620px;width:600px;background-color:antiquewhite;float:left;margin-left:20px;margin-top:10px;">
+            <div id="introDiv" style="height:630px;width:600px;background-color:antiquewhite;float:left;margin-left:20px;margin-top:10px;">
 
                 <h3><a style="color:blueviolet">Register</a></h3>
-                <table style="width:100%;border-collapse:collapse;white-space:nowrap;">
+                <table border="0" style="width:100%;border-collapse:separate;white-space:nowrap;border-spacing:0.5em">
 
                     <tr>
-                        <td colspan="2">   
-                            <hr style="border-color:#0000FF" ;border-width:3px" />
+                        <td colspan="3">   
+                            <hr style="border-color:#0000FF; border-width:3px;" />
                         </td>
                     </tr>
                     <tr>
@@ -79,10 +79,9 @@
                             @Html.DisplayNameFor(m => m.FirstName)
                         </td>
                         <td>
-                            &nbsp;@Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                            &nbsp;
+                            @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
                         </td>
-                        <td width="100%">
+                        <td width="40%">
                             @Html.ValidationMessageFor(m => m.FirstName)
                         </td>
                     </tr>
@@ -92,47 +91,41 @@
                             @Html.DisplayNameFor(m => m.LastName)
                         </td>
                         <td>
-                            &nbsp;@Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
                         </td>
                         
                         <td>
                             @Html.ValidationMessageFor(m => m.LastName)
                         </td>
                     </tr>
-                    <tr></tr>
                     <tr>
                         <td align="right">
                             @Html.DisplayNameFor(m => m.StreetAddress)
                         </td>
                         <td>
-                            &nbsp;@Html.EditorFor(m => m.StreetAddress, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.StreetAddress, new { htmlAttributes = new { @class = "form-control" } })
                         </td>
                         <td>
                             @Html.ValidationMessageFor(m => m.StreetAddress)
                         </td>
                     </tr>
-
-                    <tr></tr>
-
                     <tr>
                         <td align="right">
                             @Html.DisplayNameFor(m => m.Email)
                         </td>
                         <td>
-                            &nbsp;@Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
                         </td>
                         <td>
                             @Html.ValidationMessageFor(m => m.Email)
                         </td>
                     </tr>
-
-
                     <tr>
                         <td align="right">
                             @Html.DisplayNameFor(m => m.UserName)
                         </td>
                         <td>
-                            &nbsp;@Html.EditorFor(m => m.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.UserName, new { htmlAttributes = new { @class = "form-control" } })
                         </td>
                         <td>
                             @Html.ValidationMessageFor(m => m.UserName)
@@ -143,7 +136,7 @@
                             @Html.DisplayNameFor(m => m.Password)
                         </td>
                         <td>
-                            &nbsp;@Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control" } })
                         </td>
                         <td>
                             @Html.ValidationMessageFor(m => m.Password)
@@ -154,7 +147,7 @@
                             @Html.DisplayNameFor(m => m.ConfirmPwd)
                         </td>
                         <td>
-                            &nbsp;@Html.EditorFor(m => m.ConfirmPwd, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.ConfirmPwd, new { htmlAttributes = new { @class = "form-control" } })
                         </td>
                         <td>
                             @Html.ValidationMessageFor(m => m.ConfirmPwd)
@@ -165,7 +158,7 @@
                             @Html.DisplayNameFor(m => m.PasswordHintQ)
                         </td>
                         <td>
-                            &nbsp;@Html.EditorFor(m => m.PasswordHintQ, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.PasswordHintQ, new { htmlAttributes = new { @class = "form-control" } })
                         </td>
                         <td>
                             @Html.ValidationMessageFor(m => m.PasswordHintQ)
@@ -176,7 +169,7 @@
                             @Html.DisplayNameFor(m => m.PasswordHintA)
                         </td>
                         <td>
-                            &nbsp;@Html.EditorFor(m => m.PasswordHintA, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.PasswordHintA, new { htmlAttributes = new { @class = "form-control" } })
                         </td>
                         <td>
                             @Html.ValidationMessageFor(m => m.PasswordHintA)
@@ -186,13 +179,13 @@
                         <td></td>
                         <td>
                             <div>
-                                <table>
+                                <table border="0" style="width:100%; border-collapse:separate;">
                                     <tr>
-                                        <td>
-                                            <input type="submit" class="btn btn-success"value="Register" id="btnRegister" name="btnRegister" />
+                                        <td width="45%">
+                                            <input type="submit" class="btn btn-success"value="Register" id="btnRegister" name="btnRegister" style="width:95%"/>
                                         </td>
-                                        <td>
-                                            <input type="reset" value="Reset" id="btnResetReg" name="btnResetReg" />
+                                        <td width="45%">
+                                            <input type="reset" class="btn btn-default" value="Reset" id="btnResetReg" name="btnResetReg" style="width:100%"/>
                                         </td>
                                     </tr>
                                 </table>
