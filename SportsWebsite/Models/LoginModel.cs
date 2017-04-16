@@ -9,6 +9,8 @@ namespace SportsWebsite.Models
     public class LoginModel
     {
         [Required(ErrorMessage = "Username is required..")]
+        [Display(Name = "User name")]
+
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Password is required..")]
