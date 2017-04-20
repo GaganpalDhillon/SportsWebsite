@@ -6,9 +6,40 @@
 @section TitleContent{
     MyView
 }
+
+    
+
 @section ContentBody{
 @using (Html.BeginForm())
 {
+    <script src="http://connect.facebook.net/en_US/all.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript">
+        
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '240034793140227',
+                xfbml: true,
+                version: 'v2.8'
+            });
+            FB.AppEvents.logPageView();
+        };
+        //function clickOnB() {
+        //    alert("dhfgdhfhdgdffdfhghfd");
+        //}[0
+        //document.getElementById('shareBtn').onclick = 
+        function clickOnB() {
+            alert("onshare");
+            FB.ui({
+                method: 'share',
+                display: 'popup',
+              
+              //  link: 'http://developers.facebook.com/docs/reference/dialogs/',
+                href:'http://www.facebook.com/sharer/sharer.php',
+               //href: 'http://www.google.com',
+            }, function (response) { });
+        }
+    </script>
     <div id="secondDiv" style="height:660px;width:1000px;background-color:red;">
         <div id="introDiv" style="height:620px;width:600px;background-color:antiquewhite;float:left;margin-left:20px;margin-top:10px;">
           
@@ -20,7 +51,7 @@
                 </tr>
                  <tr>
                      <td>
-                        <h2><a style="color:blueviolet;padding-left:100px;">Sign In </a> </h2>
+                        <h2><a style="color:blueviolet;padding-left:60px;">Sign In </a> </h2>
                          <table border="0" align=center style="width:90%; border-collapse:separate; border-spacing:0.5em;">
                              <tr>
                                  <td colspan="3">
@@ -29,7 +60,7 @@
                              </tr>
                              <tr>
                                  <td colspan="3">
-                                     <strong><font color="#000099" style="background-color:#FFFF66">Existing Users</font></strong>
+                                     <strong>Existing Users</strong>
                                 Please Login
                                   </td>
                              </tr>
@@ -39,7 +70,7 @@
                                  </td>
                              </tr>
                              <tr>
-                                 <td align="right">
+                                 <td align="right" >
                                   @Html.DisplayNameFor(login => login.Username)
                                   </td>
                                 <td>
@@ -73,7 +104,7 @@
                              </tr>
                              <tr>
                                  <td colspan="3">
-                                     <strong><font color="#006600" style="background-color: #ccffff">New Users</font></strong>:
+                                     <strong>New Users</strong>:
                                      please
                                      @Html.ActionLink("Click here", "Register", "Login")
                                      to Register.
@@ -85,10 +116,24 @@
             </table>
            
         </div>
-
-        <div id="whatNewDiv" style="height:620px;width:300px;background-color:beige;float:right;margin-top:10px;margin-right:20px;"></div>
+       
+        <div id="whatNewDiv" style="height:620px;width:330px;background-color:beige;float:right;margin-top:10px;margin-right:20px;">
+            <h1>Share Dialog</h1>
+            <p>Click the button below to trigger a Share Dialog</p>
+            <input class="btn btn-success clearfix" type="button" value="Share" id="shareBtn" onclick="clickOnB();" />
+            @*<div id="shareBtn" class="btn btn-success clearfix">Share</div>*@
+            <p style="margin-top:50px">
+                <hr/>
+                <a class="btn btn-small" href="https://developers.facebook.com/docs/sharing/reference/share-dialog">Share Dialog Documentation"</a>
+             <a class="btn btn-primary btn-lg"><i class="fa fa-facebook fa-lg"></i>Share on Facebook</a>
+             </p>
+            <div class="input-group margin-bottom-sm">
+                <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                <input class="form-control" type="text" placeholder="Email address">
+            </div>
+        </div>
     </div>
     
-
-    }
+                
+}
 }
