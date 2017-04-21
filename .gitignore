@@ -12,3 +12,4 @@ packages
 *.cache
 *.dll
 *.exe
+.vs
