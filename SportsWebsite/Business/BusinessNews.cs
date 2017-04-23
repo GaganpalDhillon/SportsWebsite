@@ -26,7 +26,7 @@ namespace SportsWebsite.Business
         public List<NewsFeed> GetProducts(string catID)
         {
             List<NewsFeed> TList = new List<NewsFeed>();
-            TList = repo.GetProducts(catID);
+            TList = repo.GetFeeds(catID);
             return TList;
         }
     }

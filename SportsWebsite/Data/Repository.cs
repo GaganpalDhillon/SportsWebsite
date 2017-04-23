@@ -47,27 +47,25 @@ namespace SportsWebsite.Data
             return obj != null ? true : false;
         }
 
-        public List<NewsFeed> GetProducts(string catID)
+        public List<NewsFeed> GetFeeds(string catID)
         {
             List<NewsFeed> TList = null;
             try
             {
                 if (TList == null)
                 {
-                    DataTable dataTable = GetProductsDB(catID);
+                    DataTable dataTable = GetNewsFeed(catID);
                     TList = RepositoryHelper.ConvertToList<NewsFeed>(dataTable);
                     if (TList != null)
                     {
                         List<ImageModel> ImageList = null;
                         foreach (var item in TList)
                         {
-                            DataTable imageTable = GetImages(item.ProductID);
+                            DataTable imageTable = GetImages(item.Id);
                             ImageList = RepositoryHelper.ConvertToList<ImageModel>(imageTable);
                             if (ImageList != null && ImageList.Count() > 0)
                                 item.Image = ImageList.First<ImageModel>();
                         }
-
-                        cache.Insert(key, TList);
                     }
                 }
             }
@@ -78,7 +76,7 @@ namespace SportsWebsite.Data
             return TList;
         }
 
-        private DataTable GetProductsDB(string catID)
+        private DataTable GetNewsFeed(string catID)
         {
             DataTable dataTable = null;
             try
@@ -96,7 +94,27 @@ namespace SportsWebsite.Data
                     p1.Value = catID;
                     PList.Add(p1);
                 }
-                dataTable = idataAccess.GetDataTable(sql, PList);
+                dataTable = dataAccess.GetDataTable(sql, PList);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return dataTable;
+        }
+
+        private DataTable GetImages(int Id)
+        {
+            DataTable dataTable = null;
+            try
+            {
+                string sql = "select * from images where newsId=@newsId";
+                List<DbParameter> PList = new List<DbParameter>();
+                DbParameter p1 = new SqlParameter("@newsId", SqlDbType.Int);
+                p1.Value = Id;
+                PList.Add(p1);
+
+                dataTable = dataAccess.GetDataTable(sql, PList);
             }
             catch (Exception)
             {

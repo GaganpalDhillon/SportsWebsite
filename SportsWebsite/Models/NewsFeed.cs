@@ -15,13 +15,21 @@ namespace SportsWebsite.Models
         public string Heading { get; set; }
         public string Author { get; set; }
         public DateTime Date { get; set; }
-        public Byte[] Image { get; set; }
+        public ImageModel Image { get; set; }
         public string ShortDesc { get; set; }
         public string LongDesc { get; set; }
 
+        #region IEntity members
         public void SetFeilds(DataRow dataRow)
         {
-            throw new NotImplementedException();
+            Id = (int)dataRow["NewsId"];
+            Category = (int)dataRow["CatagoryId"];
+            Heading = (string)dataRow["Heading"];
+            Author = (string)dataRow["Author"];
+            Date = (DateTime)dataRow["DateTime"];
+            ShortDesc = (string)dataRow["short"];
+            LongDesc = (string)dataRow["story"];
         }
+        #endregion
     }
 }
