@@ -1,4 +1,5 @@
 ﻿using SportsWebsite.Data;
+using SportsWebsite.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,12 @@ namespace SportsWebsite.Business
             return repo.ValidateUser(user, password);
         }
         #endregion
+
+        public List<NewsFeed> GetProducts(string catID)
+        {
+            List<NewsFeed> TList = new List<NewsFeed>();
+            TList = repo.GetProducts(catID);
+            return TList;
+        }
     }
 }

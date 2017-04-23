@@ -74,7 +74,9 @@
                                   @Html.DisplayNameFor(login => login.Username)
                                   </td>
                                 <td>
-                                  @Html.EditorFor(login => login.Username, new { htmlAttributes = new { @class = "form-control" } })
+                                  @Html.EditorFor(login => login.Username,
+                                 new { htmlAttributes =
+                                    new { @class = "form-control", @placeholder = "Enter Username" }})
                                 </td>
                                  <td width="40%"></td>
                              </tr>
@@ -83,7 +85,9 @@
                                      @Html.DisplayNameFor(login => login.Password)
                                  </td>
                                  <td>
-                                     @Html.EditorFor(login => login.Password, new { htmlAttributes = new {@class = "form-control", @type = "password"} })
+                                     @Html.EditorFor(login => login.Password,
+                                    new { htmlAttributes =
+                                        new {@class = "form-control", @type = "password", @placeholder = "Enter Password" }})
                                  </td>
                                  <td>
                                      @Html.ValidationMessageFor(login =>login.Password)
@@ -139,19 +143,19 @@
 
             <!--google +-->
             <a href="https://plus.google.com/share?url=localhost:62932/Login/Login" onclick="javascript:window.open(this.href,
-  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
                 <img src="https://www.gstatic.com/images/icons/gplus-64.png" alt="Share on Google+" />
             </a>
 
-           
+
             <!-- Facebook -->
-            <a href="http://www.facebook.com/sharer.php?u=https://simplesharebuttons.com"  onclick="javascript:window.open(this.href,
-  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+            <a href="http://www.facebook.com/sharer.php?u=https://simplesharebuttons.com" onclick="javascript:window.open(this.href,
+'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
                 <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
             </a>
             <!-- Twitter -->
             <a href="https://twitter.com/share?url=https://simplesharebuttons.com&amp;text=Simple%20Share%20Buttons&amp;hashtags=simplesharebuttons" onclick="javascript:window.open(this.href,
-  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
                 <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" />
             </a>
         </div>

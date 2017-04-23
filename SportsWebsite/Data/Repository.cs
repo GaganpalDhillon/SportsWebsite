@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SportsWebsite.Models;
+using SportsWebsite.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -43,6 +45,64 @@ namespace SportsWebsite.Data
             }
 
             return obj != null ? true : false;
+        }
+
+        public List<NewsFeed> GetProducts(string catID)
+        {
+            List<NewsFeed> TList = null;
+            try
+            {
+                if (TList == null)
+                {
+                    DataTable dataTable = GetProductsDB(catID);
+                    TList = RepositoryHelper.ConvertToList<NewsFeed>(dataTable);
+                    if (TList != null)
+                    {
+                        List<ImageModel> ImageList = null;
+                        foreach (var item in TList)
+                        {
+                            DataTable imageTable = GetImages(item.ProductID);
+                            ImageList = RepositoryHelper.ConvertToList<ImageModel>(imageTable);
+                            if (ImageList != null && ImageList.Count() > 0)
+                                item.Image = ImageList.First<ImageModel>();
+                        }
+
+                        cache.Insert(key, TList);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return TList;
+        }
+
+        private DataTable GetProductsDB(string catID)
+        {
+            DataTable dataTable = null;
+            try
+            {
+                string sql = "";
+                List<DbParameter> PList = new List<DbParameter>();
+                if (String.IsNullOrEmpty(catID))
+                {
+                    sql = "select * from products";
+                }
+                else
+                {
+                    sql = "select * from  products where catid=@catID";
+                    DbParameter p1 = new SqlParameter("@catID", SqlDbType.VarChar, 50);
+                    p1.Value = catID;
+                    PList.Add(p1);
+                }
+                dataTable = idataAccess.GetDataTable(sql, PList);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return dataTable;
         }
     }
 }
