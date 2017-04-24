@@ -7,7 +7,7 @@ using System.Data;
 
 namespace SportsWebsite.Models
 {
-    public class NewsFeed : IEntity
+    public class NewsFeedModel : IEntity
     {
         public int Id { get; set; }
         public int Category { get; set; }

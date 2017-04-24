@@ -23,11 +23,18 @@ namespace SportsWebsite.Business
         }
         #endregion
 
-        public List<NewsFeed> GetProducts(string catID)
+        #region NewsFeed
+        public List<NewsFeedModel> GetProducts(string catID)
         {
-            List<NewsFeed> TList = new List<NewsFeed>();
+            List<NewsFeedModel> TList = new List<NewsFeedModel>();
             TList = repo.GetFeeds(catID);
             return TList;
         }
+
+        public bool AddNewsFeed(NewsFeedModel model)
+        {
+            return repo.AddNewsFeed(model);
+        }
+        #endregion
     }
 }

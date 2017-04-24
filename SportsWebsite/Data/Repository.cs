@@ -47,15 +47,15 @@ namespace SportsWebsite.Data
             return obj != null ? true : false;
         }
 
-        public List<NewsFeed> GetFeeds(string catID)
+        public List<NewsFeedModel> GetFeeds(string catID)
         {
-            List<NewsFeed> TList = null;
+            List<NewsFeedModel> TList = null;
             try
             {
                 if (TList == null)
                 {
                     DataTable dataTable = GetNewsFeed(catID);
-                    TList = RepositoryHelper.ConvertToList<NewsFeed>(dataTable);
+                    TList = RepositoryHelper.ConvertToList<NewsFeedModel>(dataTable);
                     if (TList != null)
                     {
                         List<ImageModel> ImageList = null;
@@ -121,6 +121,11 @@ namespace SportsWebsite.Data
                 throw;
             }
             return dataTable;
+        }
+
+        public bool AddNewsFeed(NewsFeedModel model)
+        {
+            return false;
         }
     }
 }
