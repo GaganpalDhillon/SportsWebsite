@@ -151,7 +151,7 @@ namespace SportsWebsite.Data
                 cmd1.Parameters.Add(p1);
 
                 DbParameter p2 = new SqlParameter("@Category", SqlDbType.Int);
-                p2.Value = model.Category;
+               // p2.Value = model.Category;
                 cmd1.Parameters.Add(p2);
 
                 DbParameter p3 = new SqlParameter("@SubCategory", SqlDbType.Int);
@@ -204,15 +204,15 @@ namespace SportsWebsite.Data
                 p1b.Value = fileInfo.Name;
                 cmd2.Parameters.Add(p1b);
 
-                DbParameter p2b = new SqlParameter("Type", SqlDbType.VarChar, 10);
+                DbParameter p2b = new SqlParameter("@Type", SqlDbType.VarChar, 10);
                 p2b.Value = fileInfo.Extension;
                 cmd2.Parameters.Add(p2b);
 
-                DbParameter p3b = new SqlParameter("Image", SqlDbType.VarBinary);
+                DbParameter p3b = new SqlParameter("@Image", SqlDbType.VarBinary);
                 p3b.Value = ImageData;
                 cmd2.Parameters.Add(p3b);
 
-                DbParameter p4b = new SqlParameter("NewsId", SqlDbType.Int);
+                DbParameter p4b = new SqlParameter("@NewsId", SqlDbType.Int);
                 p4b.Value = NewsId;
 
                 cmd2.Transaction = Transaction;

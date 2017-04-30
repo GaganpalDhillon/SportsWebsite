@@ -1,0 +1,148 @@
+﻿@model SportsWebsite.Models.NewsFeedModel
+@{
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+@section TitleContent{
+    Admin
+}
+
+@section ContentBody{
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script language="javascript" type="text/javascript">
+    function GetSubCategory(_CategoryId){
+        var promessage ="<option value ='0'>Please wait...</option>";
+        $("#ddlsub").html(promessage).show();
+        var url = "http://localhost:62932/Login/GetSubByCategory";
+        $.ajax({
+            url: url,
+            data: {catId : _CategoryId},
+            cache: false,
+            type: "POST",
+            success: function (data){
+                var markup ="<option value='0'>Select SubCategory</option>";
+                for(var x = 0; x< data.length; x++){
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#ddlsub").html(markup).show();
+            },
+            error: function 
+                (response){
+                alert("error : " + response);
+            }
+        }) ;
+    }
+    </script>
+    @using (Html.BeginForm())
+    {
+        <div id="secondDiv" style="height:660px;width:1000px;background-color:red;">
+            <div id="introDiv" style="height:620px;width:600px;background-color:antiquewhite;float:left;margin-left:20px;margin-top:10px;">
+                <h3><a style="color:blueviolet;padding-left:60px;">News Feed</a></h3>
+                <table border="0" style="width:100%;border-collapse:separate;white-space:nowrap;border-spacing:0.5em">
+
+                    <tr>
+                        <td colspan="2">
+                            <hr style="border-color:#0000FF; border-width:3px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                          @Html.DisplayNameFor(m => m.Cat)
+                        </td>
+                        <td>
+                             
+                            @Html.DropDownListFor(m => m.Cat, new SelectList(Model.Cat, "Id", "CategoryName") , new
+                            {
+                            @class = "form-control", @id = "ddlCat", @style = "width:200px;", @onchange = "javascript:GetSubCategory(this.value);"
+                            })
+                            
+                            <select class="form-control" id="ddlsub" name="ddlsub" style="width: 200px">
+
+                            </select>
+                            
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td align="right">
+                            @Html.DisplayNameFor(m => m.Subcategory)
+                        </td>
+                        <td>
+                            @Html.EditorFor(m => m.Subcategory, new { htmlAttributes = new { @class = "form-control" } })
+                        </td>
+
+                        <td>
+                            @Html.ValidationMessageFor(m => m.Subcategory)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            @Html.DisplayNameFor(m => m.Heading)
+                        </td>
+                        <td>
+                            @Html.EditorFor(m => m.Heading, new { htmlAttributes = new { @class = "form-control" } })
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(m => m.Heading)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            @Html.DisplayNameFor(m => m.Author)
+                        </td>
+                        <td>
+                            @Html.EditorFor(m => m.Author, new { htmlAttributes = new { @class = "form-control" } })
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(m => m.Author)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            @Html.DisplayNameFor(m => m.Image)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.Image.ImageFile, new { type = "file" } )
+                        </td>
+                        <td>
+                            @*@Html.ValidationMessageFor(m => m.Image)*@
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            @Html.DisplayNameFor(m => m.LongDesc)
+                        </td>
+                        <td>
+                            @Html.EditorFor(m => m.LongDesc, new { htmlAttributes = new { @class = "form-control" } })
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(m => m.LongDesc)
+                        </td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div>
+                                <table border="0" style="width:100%; border-collapse:separate;">
+                                    <tr>
+                                        <td width="45%">
+                                            <input type="submit" class="btn btn-success" value="Register" id="btnRegister" name="btnRegister" style="width:95%" />
+                                        </td>
+                                        <td width="45%">
+                                            <input type="reset" class="btn btn-default" value="Reset" id="btnResetReg" name="btnResetReg" style="width:100%" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+
+                </div>
+            </div>
+                }
+
+                }

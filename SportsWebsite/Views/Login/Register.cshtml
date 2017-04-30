@@ -169,7 +169,7 @@
                             @Html.DisplayNameFor(m => m.PasswordHintA)
                         </td>
                         <td>
-                            @Html.EditorFor(m => m.PasswordHintA, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.PasswordHintA, new { htmlAttributes = new { @class = "form-control",@placeholder="Password" } })
                         </td>
                         <td>
                             @Html.ValidationMessageFor(m => m.PasswordHintA)
