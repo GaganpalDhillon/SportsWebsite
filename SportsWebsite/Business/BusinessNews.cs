@@ -7,11 +7,11 @@ using System.Web;
 
 namespace SportsWebsite.Business
 {
-    public class BusinessShop
+    public class BusinessNews
     {
         private Repository repo = null;
 
-        public BusinessShop()
+        public BusinessNews()
         {
             repo = new Repository();
         }
