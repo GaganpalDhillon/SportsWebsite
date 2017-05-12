@@ -179,21 +179,21 @@ namespace SportsWebsite.Data
             return dataTable;
         }
 
-        public List<FootballTableModel> footballTables(string leagueName)
+        public List<FootballTableModel> footballTables(int leagueId)
         {
             DataTable dataTable = null;
             List<FootballTableModel> fList = new List<FootballTableModel>();
             try
             {
-                string sql = "select leagueId from League where Name = @leagueName";
-                List<DbParameter> Plist = new List<DbParameter>();
-                DbParameter p1 = new SqlParameter("@leagueName", SqlDbType.VarChar, 50);
-                p1.Value = leagueName;
-                Plist.Add(p1);
-                object obj = dataAccess.GetSingleAnswer(sql, Plist);
-                int leagueId = 0;
-                if (obj != null)
-                    leagueId = (int)obj;
+                //string sql = "select leagueId from League where Name = @leagueName";
+                //List<DbParameter> Plist = new List<DbParameter>();
+                //DbParameter p1 = new SqlParameter("@leagueName", SqlDbType.VarChar, 50);
+                //p1.Value = leagueName;
+                //Plist.Add(p1);
+                //object obj = dataAccess.GetSingleAnswer(sql, Plist);
+                //int leagueId = 0;
+                //if (obj != null)
+                //    leagueId = (int)obj;
 
                 string sql1 = "select * from Tables where leagueId =@leagueId ";
                 List<DbParameter> TList = new List<DbParameter>();
@@ -229,6 +229,47 @@ namespace SportsWebsite.Data
             return fList;
         }
       
+        public List<TeamTypeModel> GetClubs()
+        {
+            DataTable dataTable = null;
+            List<TeamTypeModel> tList = new List<TeamTypeModel>();
+            try
+            {
+                string sql = "select * from TeamType";
+                List<DbParameter> plist = new List<DbParameter>();
+                dataTable = dataAccess.GetDataTable(sql, plist);
+                tList = RepositoryHelper.ConvertToList<TeamTypeModel>(dataTable);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return tList;
+        }
+
+        public List<TeamDetailsModel> GetTeams(int Id )
+        {
+            DataTable dataTable = null;
+            List<TeamDetailsModel> fList = new List<TeamDetailsModel>();
+            try
+            {
+               
+                string sql1 = "select * from TeamDetails where TypeId =@Id ";
+                List<DbParameter> TList = new List<DbParameter>();
+                DbParameter p2 = new SqlParameter("@Id", SqlDbType.Int);
+                p2.Value = Id;
+                TList.Add(p2);
+                dataTable = dataAccess.GetDataTable(sql1, TList);
+                fList = RepositoryHelper.ConvertToList<TeamDetailsModel>(dataTable);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return fList;
+
+        }
+
         public bool AddNewsFeed(NewsFeedModel model)
         {
             bool res = true;

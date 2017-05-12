@@ -37,10 +37,10 @@ namespace SportsWebsite.Business
             return NList;
         }
 
-        public List<FootballTableModel> footballTables(string leagueName)
+        public List<FootballTableModel> footballTables(int leagueId)
         {
             List<FootballTableModel> fList = new List<FootballTableModel>();
-            fList = repo.footballTables(leagueName);
+            fList = repo.footballTables(leagueId);
             return fList;
         }
 
@@ -49,6 +49,18 @@ namespace SportsWebsite.Business
             List<LeagueModel> lList = new List<LeagueModel>();
             lList = repo.GetLeagueNames();
             return lList;
+        }
+        public List<TeamDetailsModel> GetTeams(int Id)
+        {
+            List<TeamDetailsModel> tdList = new List<TeamDetailsModel>();
+            tdList = repo.GetTeams(Id);
+            return tdList;
+        }
+        public List<TeamTypeModel> GetClubs()
+        {
+            List<TeamTypeModel> ttList = new List<TeamTypeModel>();
+            ttList = repo.GetClubs();
+            return ttList;
         }
         public bool AddNewsFeed(NewsFeedModel model)
         {

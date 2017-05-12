@@ -1,0 +1,78 @@
+﻿@model SportsWebsite.Models.TeamModel
+@using SportsWebsite.Models;
+@{
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+@section TitleContent{
+    Football teams
+}
+
+@section ContentBody{
+    @using (Html.BeginForm())
+    {
+        <div id="mainView" style="height:600px;width:1000px;background-color:red;">
+            <div id="tableview" style="height:500px;width:800px;background-color:antiquewhite;">
+                <table border="0" style="width:70%;border-collapse:separate;white-space:nowrap;border-spacing:0.5em">
+                    <tr>
+                        <td align="center">
+                            @Html.DisplayNameFor(m => m.teamTypeModel[0].Type)
+
+                        </td>
+                        <td>
+                            @{
+                                List<SelectListItem> listItems = new List<SelectListItem>();
+                                //Write loop and iterate on all elements of m.leagueModel[i]
+                                listItems.Add(new SelectListItem
+                                {
+                                    Text = "-- Select --",
+                                    Value = "0",
+                                    Selected = true
+                                });
+
+                                foreach (TeamTypeModel item in Model.teamTypeModel)
+                                {
+                                    if (item.Type != null)
+                                    {
+                                        listItems.Add(new SelectListItem
+                                        {
+                                            Text = item.Type,
+                                            Value = item.Id.ToString()
+                                        });
+                                    }
+                                }
+                            }
+                            @Html.DropDownListFor(m => m.teamTypeModel[0].Type, listItems, 
+                        new
+                        {
+                            @class = "form-control",
+                        })
+
+                        </td>
+
+
+                        <td width="45%">
+                            <input type="submit" class="btn btn-success" value="Teams" id="btnRegister" name="btnRegister" style="width:95%" />
+
+                        </td>
+                    </tr>
+                    <tr></tr>
+                </table>
+                   
+                       <h1 style="padding-left:70px;"><u>Teams</u></h1>
+                <table>@foreach (TeamDetailsModel teamdetailsModel in Model.teamDetailsModel)
+                {
+
+                   <tr><td style="padding-left:50px";>@teamdetailsModel.TeamName</td>
+                    </tr>
+                    <tr></tr>   
+                 
+                }
+                </table>
+                       
+                    
+                </div>
+            </div>
+                                }
+}
+
+

@@ -1,97 +1,108 @@
 ﻿@model SportsWebsite.Models.TableModel
 @using SportsWebsite.Models;
 @{
-    Layout = "~/Views/Shared/MyLayout.cshtml";
+Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 @section TitleContent{
-    Football table
+Football table
 }
 
 @section ContentBody{
-    @using (Html.BeginForm())
-    {
-        <div id="mainView" style="height:600px;width:1000px;background-color:red;">
-            <div id="tableview" style="height:500px;width:800px;background-color:antiquewhite;">
-                <table border="0" style="width:50%;border-collapse:separate;white-space:nowrap;border-spacing:0.5em">
-                    <tr>
-                        <td align="center">
-                            @Html.DisplayNameFor(m => m.leagueModel[0].leagueName)
+@using (Html.BeginForm())
+{
+    <div id="mainView" style="height:600px;width:1000px;background-color:red;">
+        <div id="tableview" style="height:500px;width:800px;background-color:antiquewhite;">
+            <table border="0" style="width:70%;border-collapse:separate;white-space:nowrap;border-spacing:0.5em">
+                <tr>
+                    <td align="center">
+                        @Html.DisplayNameFor(m => m.leagueModel[0].leagueName)
 
-                        </td>
-                        <td>
-                            @{
-                                List<SelectListItem> listItems = new List<SelectListItem>();
-                                //Write loop and iterate on all elements of m.leagueModel[i]
-                                listItems.Add(new SelectListItem
-                                {
-                                    Text = "-- Select --",
-                                    Value = "0",
-                                    Selected = true
-                                });
+                    </td>
+                    <td>
+                        @{
+                            List<SelectListItem> listItems = new List<SelectListItem>();
+                            //Write loop and iterate on all elements of m.leagueModel[i]
+                            listItems.Add(new SelectListItem
+                            {
+                                Text = "-- Select --",
+                                Value = "0",
+                                Selected = true
+                            });
 
-                                foreach(LeagueModel item in Model.leagueModel)
+                            foreach(LeagueModel item in Model.leagueModel)
+                            {
+                                if (item.leagueName != null)
                                 {
-                                    if (item.leagueName != null)
+                                    listItems.Add(new SelectListItem
                                     {
-                                        listItems.Add(new SelectListItem
-                                        {
-                                            Text = item.leagueName,
-                                            Value = item.leagueId.ToString()
-                                        });
-                                    }
+                                        Text = item.leagueName,
+                                        Value = item.leagueId.ToString()
+                                    });
                                 }
                             }
-                            @Html.DropDownListFor(m => m.leagueModel[0].leagueName, listItems,
-                            new
-                            {
-                                @id = "league", @class = "form-control",
-                            })
+                        }
+                        @Html.DropDownListFor(m => m.leagueModel[0].leagueName, listItems,
+                        new
+                        {
+                            @class = "form-control",
+                        })
 
-                        </td>
+                    </td>
                         
 
-                        <td width="45%">
-                            <input type="submit" class="btn btn-success" value="Update" id="btnRegister" name="btnRegister" style="width:95%" />
+                    <td width="45%">
+                        <input type="submit" class="btn btn-success" value="Update" id="btnRegister" name="btnRegister" style="width:95%" />
 
-                        </td>
-                    </tr>
-                    <tr></tr>
-                    <tr>
-                        <td>
-                            @Html.DisplayNameFor(m => m.footballTableModel[0].Team)
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(m => m.footballTableModel[0].Played)
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(m => m.footballTableModel[0].Win)
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(m => m.footballTableModel[0].Draw)
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(m => m.footballTableModel[0].Lost)
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(m => m.footballTableModel[0].GoalsFor)
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(m => m.footballTableModel[0].GoalsAgainst)
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(m => m.footballTableModel[0].GoalsDifference)
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(m => m.footballTableModel[0].Points)
-                        </td>
-                        @foreach(FootballTableModel footballtable in Model.footballTableModel)
-                        {
-                           
-                            
-                        }
-                    </tr>
+                    </td>
+                </tr>
+                <tr></tr>
                 </table>
-            </div>
+            <table border="1" style="width:100%;border-color:black">
+                <tr>
+            <td>
+               <h4>@Html.DisplayNameFor(m => m.footballTableModel[0].Team)</h4> 
+               
+            </td>
+            <td>
+               <h4> @Html.DisplayNameFor(m => m.footballTableModel[0].Played)</h4>
+            </td>
+            <td>
+               <h4> @Html.DisplayNameFor(m => m.footballTableModel[0].Win)</h4>
+            </td>
+            <td>
+                <h4>@Html.DisplayNameFor(m => m.footballTableModel[0].Draw)</h4> 
+            </td>
+            <td>
+                <h4> @Html.DisplayNameFor(m => m.footballTableModel[0].Lost)</h4>
+            </td>
+            <td>
+                <h4> @Html.DisplayNameFor(m => m.footballTableModel[0].GoalsFor)</h4>
+            </td>
+            <td>
+                <h4>@Html.DisplayNameFor(m => m.footballTableModel[0].GoalsAgainst)</h4>
+            </td>
+            <td>
+                <h4> @Html.DisplayNameFor(m => m.footballTableModel[0].GoalsDifference)</h4>
+            </td>
+            <td>
+                <h4>  @Html.DisplayNameFor(m => m.footballTableModel[0].Points)</h4>
+            </td>
+            @foreach (FootballTableModel footballtable in Model.footballTableModel)
+            {
+                <tr>
+                <td>@footballtable.Team</td>
+                <td>@footballtable.Played</td>
+                <td>@footballtable.Win</td>
+                <td>@footballtable.Draw</td>
+                <td>@footballtable.Lost</td>
+                <td>@footballtable.GoalsFor</td>
+                <td>@footballtable.GoalsAgainst</td>
+                <td>@footballtable.GoalsDifference</td>
+                <td>@footballtable.Points</td>
+                </tr>
+            }
+            </table>
         </div>
-                                }
+    </div>
     }
+}

@@ -53,11 +53,37 @@ namespace SportsWebsite.Controllers
             List<LeagueModel> fList1 = new List<LeagueModel>();
             fList1 = business.GetLeagueNames();
             List<FootballTableModel> fList = new List<FootballTableModel>();
-           //string leagueName = Request.Form["league"].ToString(); 
-            fList = business.footballTables("English Premier League");
+            string leagueId = Request.Form["leagueModel[0].leagueName"];
+            //var league = model.leagueModel[0].leagueName;
+            int Id = Convert.ToInt32(leagueId);
+            fList = business.footballTables(Id);
 
             model.footballTableModel = fList;
             model.leagueModel = fList1;
+            return View(model);
+        }
+        public ActionResult FootballTeams()
+        {
+            List<TeamTypeModel> fList = new List<TeamTypeModel>();
+            fList = business.GetClubs();
+            TeamModel model = new TeamModel();
+            model.teamTypeModel = fList;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult FootballTeams(TeamModel model)
+        {
+            List<TeamTypeModel> fList1 = new List<TeamTypeModel>();
+            fList1 = business.GetClubs();
+            List<TeamDetailsModel> fList = new List<TeamDetailsModel>();
+            string myId = Request.Form["teamTypeModel[0].Type"];
+            //var league = model.leagueModel[0].leagueName;
+            int Id = Convert.ToInt32(myId);
+            fList = business.GetTeams(Id);
+
+            model.teamDetailsModel = fList;
+            model.teamTypeModel = fList1;
             return View(model);
         }
     }

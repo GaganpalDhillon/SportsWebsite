@@ -197,6 +197,9 @@
     <Compile Include="Models\NewsFeedModel.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Models\TableModel.cs" />
+    <Compile Include="Models\TeamDetailsModel.cs" />
+    <Compile Include="Models\TeamModel.cs" />
+    <Compile Include="Models\TeamTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\IEntity.cs" />
     <Compile Include="Utilities\RepositoryHelper.cs" />
@@ -224,6 +227,7 @@
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Football\NewsDesc.cshtml" />
     <Content Include="Views\Football\FootballTable.cshtml" />
+    <Content Include="Views\Football\FootballTeams.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
