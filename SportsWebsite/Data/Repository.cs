@@ -87,13 +87,67 @@ namespace SportsWebsite.Data
                 List<DbParameter> PList = new List<DbParameter>();
                 if (String.IsNullOrEmpty(catID))
                 {
-                    sql = "select * from products";
+                    sql = "select * from NewsFeed";
                 }
                 else
                 {
-                    sql = "select * from  products where catid=@catID";
+                    sql = "select * from  NewsFeed where Category=@catID";
                     DbParameter p1 = new SqlParameter("@catID", SqlDbType.VarChar, 50);
                     p1.Value = catID;
+                    PList.Add(p1);
+                }
+                dataTable = dataAccess.GetDataTable(sql, PList);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return dataTable;
+        }
+        public List<NewsFeedModel> GetDesc(string NewsID)
+        {
+            List<NewsFeedModel> TList = null;
+            try
+            {
+                if (TList == null)
+                {
+                    DataTable dataTable = GetNewsDesc(NewsID);
+                    TList = RepositoryHelper.ConvertToList<NewsFeedModel>(dataTable);
+                    if (TList != null)
+                    {
+                        List<ImageModel> ImageList = null;
+                        foreach (var item in TList)
+                        {
+                            DataTable imageTable = GetImages(item.Id);
+                            ImageList = RepositoryHelper.ConvertToList<ImageModel>(imageTable);
+                            if (ImageList != null && ImageList.Count() > 0)
+                                item.Image = ImageList.First<ImageModel>();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return TList;
+        }
+        private DataTable GetNewsDesc(string NewsID)
+        {
+            DataTable dataTable = null;
+            try
+            {
+                string sql = "";
+                List<DbParameter> PList = new List<DbParameter>();
+                if (String.IsNullOrEmpty(NewsID))
+                {
+                    sql = "select * from NewsFeed";
+                }
+                else
+                {
+                    sql = "select * from  NewsFeed where Id=@NewsID";
+                    DbParameter p1 = new SqlParameter("@NewsID", SqlDbType.VarChar, 50);
+                    p1.Value = NewsID;
                     PList.Add(p1);
                 }
                 dataTable = dataAccess.GetDataTable(sql, PList);
@@ -110,9 +164,9 @@ namespace SportsWebsite.Data
             DataTable dataTable = null;
             try
             {
-                string sql = "select * from images where newsId=@newsId";
+                string sql = "select * from Images where NewsId=@Id";
                 List<DbParameter> PList = new List<DbParameter>();
-                DbParameter p1 = new SqlParameter("@newsId", SqlDbType.Int);
+                DbParameter p1 = new SqlParameter("@Id", SqlDbType.Int);
                 p1.Value = Id;
                 PList.Add(p1);
 
@@ -125,6 +179,56 @@ namespace SportsWebsite.Data
             return dataTable;
         }
 
+        public List<FootballTableModel> footballTables(string leagueName)
+        {
+            DataTable dataTable = null;
+            List<FootballTableModel> fList = new List<FootballTableModel>();
+            try
+            {
+                string sql = "select leagueId from League where Name = @leagueName";
+                List<DbParameter> Plist = new List<DbParameter>();
+                DbParameter p1 = new SqlParameter("@leagueName", SqlDbType.VarChar, 50);
+                p1.Value = leagueName;
+                Plist.Add(p1);
+                object obj = dataAccess.GetSingleAnswer(sql, Plist);
+                int leagueId = 0;
+                if (obj != null)
+                    leagueId = (int)obj;
+
+                string sql1 = "select * from Tables where leagueId =@leagueId ";
+                List<DbParameter> TList = new List<DbParameter>();
+                DbParameter p2 = new SqlParameter("@leagueId", SqlDbType.Int);
+                p2.Value = leagueId;
+                TList.Add(p2);
+                dataTable = dataAccess.GetDataTable(sql1, TList);
+                fList = RepositoryHelper.ConvertToList<FootballTableModel>(dataTable);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return fList;
+            
+        }
+
+        public List<LeagueModel> GetLeagueNames()
+        {
+            DataTable dataTable = null;
+            List<LeagueModel> fList = new List<LeagueModel>();
+            try
+            {
+                string sql = "select * from League";
+                List<DbParameter> Plist = new List<DbParameter>();
+                dataTable = dataAccess.GetDataTable(sql, Plist);
+                fList = RepositoryHelper.ConvertToList<LeagueModel>(dataTable);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return fList;
+        }
+      
         public bool AddNewsFeed(NewsFeedModel model)
         {
             bool res = true;
@@ -141,17 +245,26 @@ namespace SportsWebsite.Data
                 Connection.Open();
                 Transaction = Connection.BeginTransaction();
 
-                string sql1 = "insert into NewsFeed (Id, Category, SubCategory, Heading, Author, Date, ShortDesc, LongDesc)" +
-                    "values (@Id, @Category, @SubCategory, @Heading, @Author, @Date, @ShortDesc, @LongDesc" +
-                    "";
+                string sql2 = "select top 1 Id from NewsFeed order by Id desc";
+                object obj = null;
+                List<DbParameter> pList = new List<DbParameter>();
+                 obj = dataAccess.GetSingleAnswer(sql2, pList);
+                int NewsId = 0;
+                if (obj != null)
+                    NewsId = (int)obj;
+
+                ++NewsId;
+
+                string sql1 = "insert into NewsFeed (Id, Category, SubCategory, Heading, Author, Date, Description)" +
+                    "values (@Id, @Category, @SubCategory, @Heading, @Author, @Date, @Description)";
                 SqlCommand cmd1 = new SqlCommand(sql1, Connection);
 
                 DbParameter p1 = new SqlParameter("@Id", SqlDbType.Int);
-                p1.Value = model.Id;
+                p1.Value = NewsId;
                 cmd1.Parameters.Add(p1);
 
                 DbParameter p2 = new SqlParameter("@Category", SqlDbType.Int);
-               // p2.Value = model.Category;
+                p2.Value = model.Id;
                 cmd1.Parameters.Add(p2);
 
                 DbParameter p3 = new SqlParameter("@SubCategory", SqlDbType.Int);
@@ -166,15 +279,11 @@ namespace SportsWebsite.Data
                 p5.Value = model.Author;
                 cmd1.Parameters.Add(p5);
 
-                DbParameter p6 = new SqlParameter("@Date", SqlDbType.VarChar, 50);
-                p6.Value = model.Date.ToString();
+                DbParameter p6 = new SqlParameter("@Date", SqlDbType.DateTime, 50);
+                p6.Value = DateTime.Now;
                 cmd1.Parameters.Add(p6);
 
-                DbParameter p7 = new SqlParameter("@ShortDesc", SqlDbType.Text);
-                p7.Value = model.ShortDesc;
-                cmd1.Parameters.Add(p7);
-
-                DbParameter p8 = new SqlParameter("@LongDesc", SqlDbType.Text);
+                DbParameter p8 = new SqlParameter("@Description", SqlDbType.Text);
                 p8.Value = model.LongDesc;
                 cmd1.Parameters.Add(p8);
 
@@ -188,17 +297,24 @@ namespace SportsWebsite.Data
                 ImageData = new Byte[model.Image.ImageFile.ContentLength];
                 stream.Read(ImageData, 0, model.Image.ImageFile.ContentLength);
 
-                string sql2 = "select top 1 NewsId from NewsFeed ordered by NewId desc";
-                List<DbParameter> pList = new List<DbParameter>();
-                object obj = dataAccess.GetSingleAnswer(sql2, pList);
-                if (obj == null)
-                    throw new Exception("Could not get top record from NewsFeed");
+                string sql4 = "select top 1 Id from Images order by Id desc";
+                object obj1 = null;
+                List<DbParameter> pList1 = new List<DbParameter>();
+                obj1 = dataAccess.GetSingleAnswer(sql4, pList1);
+                int ImageId = 0;
+                if (obj1 != null)
+                    ImageId = (int)obj1;
 
-                int NewsId = (int) obj;
-                string sql3 = "insert into images (Name, Type, Image, NewsId) values" +
-                    "(@Name, @Type, @Image, @NewsId)";
+                ++ImageId;
+
+                string sql3 = "insert into images (Id, Name, Type, Image, NewsId) values" +
+                    "(@Id, @Name, @Type, @Image, @NewsId)";
 
                 SqlCommand cmd2 = new SqlCommand(sql3, Connection);
+
+                DbParameter p0b = new SqlParameter("@Id", SqlDbType.VarChar, 50);
+                p0b.Value = ImageId;
+                cmd2.Parameters.Add(p0b);
 
                 DbParameter p1b = new SqlParameter("@Name", SqlDbType.VarChar, 50);
                 p1b.Value = fileInfo.Name;
@@ -214,6 +330,7 @@ namespace SportsWebsite.Data
 
                 DbParameter p4b = new SqlParameter("@NewsId", SqlDbType.Int);
                 p4b.Value = NewsId;
+                cmd2.Parameters.Add(p4b);
 
                 cmd2.Transaction = Transaction;
                 rows = cmd2.ExecuteNonQuery();

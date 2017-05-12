@@ -10,12 +10,12 @@ namespace SportsWebsite.Models
 {
     public class NewsFeedModel : IEntity
     {
-        [Display(Name = "Catagory")]
-        [Required(ErrorMessage = "Please select a catagory.")]
+        [Display(Name = "Category")]
+        [Required(ErrorMessage = "Please select a category.")]
         public int Id { get; set; }
 
         [Display(Name = "Subcategory")]
-        [Required(ErrorMessage = "Please select a subcatagory.")]
+        [Required(ErrorMessage = "Please select a subcategory.")]
         public int Subcategory { get; set; }
 
         [Display(Name = "Heading")]
@@ -43,13 +43,15 @@ namespace SportsWebsite.Models
         #region IEntity members
         public void SetFeilds(DataRow dataRow)
         {
-            Id = (int)dataRow["CatagorId"];
-            Subcategory = (int)dataRow["Subcatagory"];
+            Id = (int)dataRow["Id"];
+            Subcategory = (int)dataRow["Subcategory"];
             Heading = (string)dataRow["Heading"];
             Author = (string)dataRow["Author"];
-            Date = (DateTime)dataRow["DateTime"];
-            ShortDesc = (string)dataRow["short"];
-            LongDesc = (string)dataRow["story"];
+            Date = (DateTime)dataRow["Date"];
+            //ShortDesc = (string)dataRow["ShortDesc"];
+            LongDesc = (string)dataRow["Description"];
+            int len = LongDesc.Length > 50 ? 50 : LongDesc.Length;
+            ShortDesc = LongDesc.Substring(0, len);
         }
         #endregion
     }

@@ -1,0 +1,57 @@
+﻿@model List<SportsWebsite.Models.NewsFeedModel>
+@{
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+@section TitleContent{
+    News Description
+}
+@section ContentBody{
+    @using (Html.BeginForm())
+    {
+        <div id="secondDiv" style="height:860px;width:1000px;background-color:red;">
+        <div id="introDiv" style="height:840px;width:980px;background-color:antiquewhite;float:left;margin-left:10px;margin-top:10px;margin-right:10px;">
+            @{
+                if (Model != null)
+                {
+                    <div id="details" style="height:600px;width:800px;margin-left:60px;background-color:burlywood;margin-top:50px;padding-left:30px;padding-top:20px;padding-right:30px;">
+                      @{
+                          var data = Model[0];
+                          <p><h3>
+    <u>@(data.Heading)</u><!--google +-->
+    <a style="float:right;" href="https://plus.google.com/share?url=http://localhost:62932/Login/Login" onclick="javascript:window.open(this.href,
+'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=400');return false;">
+        <img src="https://www.gstatic.com/images/icons/gplus-64.png" alt="Share on Google+" />
+    </a>
+
+
+    <!-- Facebook -->
+    <a style="float:right;" href="http://www.facebook.com/sharer.php?url=localhost:62932/Login/Login" onclick="javascript:window.open(this.href,
+'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=400');return false;">
+        <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
+    </a>
+    <!-- Twitter -->
+    <a style="float:right;" href="https://twitter.com/share?url=https://simplesharebuttons.com&amp;text=Simple%20Share%20Buttons&amp;hashtags=simplesharebuttons" onclick="javascript:window.open(this.href,
+'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=400');return false;">
+        <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" />
+    </a>
+</h3></p>;
+                        
+                          <h4>By:@(data.Author) </h4>;
+                         
+                          <br /><br />
+                            <hr />
+                            string imageBase64 = Convert.ToBase64String(data.Image.ImageData);
+                            // Add type to ProductModel class
+
+                            string imageSrc = string.Format("data:/image/jpeg;base64,{0}", imageBase64);
+                            <img src="@imageSrc" height="300" width="400" alt="@data.ShortDesc" />
+                            <h4>@(data.ShortDesc)</h4>;
+                            }
+            </div>
+                }
+            }
+            
+        </div>
+        </div>
+                }
+            }

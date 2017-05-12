@@ -1,4 +1,4 @@
-﻿@model SportsWebsite.Models.NewsFeedModel
+﻿@model List<SportsWebsite.Models.NewsFeedModel>
 @{
     Layout = "~/Views/Shared/MyLayout.cshtml";
 }
@@ -8,12 +8,77 @@
 @section ContentBody{
 @using (Html.BeginForm())
 {
-    <div id="secondDiv" style="height:660px;width:1000px;background-color:red;">
+    <div id="secondDiv" style="height:860px;width:1000px;background-color:red;">
+        <div id="submenu" style="height:50px;width:1000px;background-color:yellow;">
+            <ul>
+                <li><a href="#results" onclick="myFunction()">Results</a></li>
+                <li>@Html.ActionLink("Tables", "FootballTable", "Football")</li>
+                <li><a href="#allteams">All Teams</a></li>
+                <li><a href="#leagues">Leagues & Cups</a></li>
+                <li><a href="#women">Women</a></li>
+                @*<li style="float:right">@Html.ActionLink("Login", "Login", "Login")</li>
+                <li style="float:right">@Html.ActionLink("Admin", "Admin", "Home")</li>*@
+            </ul>
+        </div>
         <div id="introDiv" style="height:630px;width:600px;background-color:antiquewhite;float:left;margin-left:20px;margin-top:10px;">
+            <div id="footballNews" style="height:210px;width:300px;background-color:aqua;float:left; margin-left:30px;margin-top:50px;">
+                        
+                            @{
+                                var len = Model.Count();
+                                var mainNews = Model[len-1];
+                                if (mainNews != null)
+                                {
+                                    if (mainNews.Image != null)
+                                    {
+                                        string imageBase64 = Convert.ToBase64String(mainNews.Image.ImageData);
+                                        // Add type to ProductModel class
+
+                                        string imageSrc = string.Format("data:/image/jpeg;base64,{0}", imageBase64);
+                                        <img height="200" src="@imageSrc" alt="@mainNews.ShortDesc" />
+
+                                    }
+                                }
+                            }
+                      </div>
+            <div id="heading" style="height:210px;width:350px;float:left;margin-top:50px;margin-left:20px;">
+                       
+                            @{ 
+                                var heading = Model[len-1];
+                                
+                                if (heading != null)
+                                {
+                                    if (heading.Heading != null)
+                                    {
+                                        string head = heading.Heading;
+                                        string description = heading.ShortDesc;
+                                        Session["Sample"] = heading.Id;
+                                        <p><h3><u><a href="@Url.Action("NewsDesc","Football")">@head</a></u></h3></p>;
+                                        <h4>@description</h4>;
+                                    }
+                                }
+                            }               
+            </div>
         </div>
         
         <div id="whatNewDiv" style="height:620px;width:330px;background-color:beige;float:right;margin-top:10px;margin-right:20px;">
             <h3>Top Stories</h3>
+            @for (var iter = len - 1; iter > len - 4; -- iter)
+            {
+                <div id="top" style="height:250px;width:300px;background-color:aquamarine;">
+                   @{
+                       var x = Model[iter];
+                       if (x != null)
+                       {
+                           string imageBase64 = Convert.ToBase64String(x.Image.ImageData);
+                           // Add type to ProductModel class
+
+                           string imageSrc = string.Format("data:/image/jpeg;base64,{0}", imageBase64);
+                            <img src="@imageSrc" height="100" alt="@x.ShortDesc" />
+                            <h4> @(x.Heading)</h4>;
+                       }
+                    }
+                </div>
+            }
         </div>
         </div>
 }

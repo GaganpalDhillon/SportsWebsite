@@ -1,4 +1,5 @@
 ﻿@model SportsWebsite.Models.NewsFeedModel
+    @using SportsWebsite.Models;
 @{
     Layout = "~/Views/Shared/MyLayout.cshtml";
 }
@@ -32,12 +33,33 @@
         }) ;
     }
     </script>
-    @using (Html.BeginForm())
+    <script language="javascript" type="text/javascript">
+        function GetSubCat(_Index) {
+            var promessage = "<option value ='0'>Please wait...</option>";
+            $("#ddlsub").html(promessage).show();
+            var markup = "<option value='0'>Select SubCategory</option>";
+            if (_Index == 1) {
+                var markup = "<option value='0'>Select SubCategory</option><option value='1'>Results</option>" +
+                "<option value='2'>Tables</option><option value='3'>All Teams</option>" +
+                "<option value='4'>Leagues & Cups</option><option value='5'>Women</option>";
+               
+            } else if (_Index == 2) {
+                var markup = "<option value='0'>Select SubCategory</option><option value='1'>Results</option>";
+                
+            } else if (_Index == 3) {
+                var markup = "<option value='0'>Select SubCategory</option><option value='1'>Fixes</option>";
+                
+            }
+            $("#ddlsub").html(markup).show();
+        }
+    </script>
+   
+    @using (Html.BeginForm("Admin", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div id="secondDiv" style="height:660px;width:1000px;background-color:red;">
-            <div id="introDiv" style="height:620px;width:600px;background-color:antiquewhite;float:left;margin-left:20px;margin-top:10px;">
+            <div id="introDiv" style="height:620px;width:900px;background-color:antiquewhite;float:left;margin-left:20px;margin-top:10px;">
                 <h3><a style="color:blueviolet;padding-left:60px;">News Feed</a></h3>
-                <table border="0" style="width:100%;border-collapse:separate;white-space:nowrap;border-spacing:0.5em">
+                <table border="0" style="width:50%;border-collapse:separate;white-space:nowrap;border-spacing:0.5em">
 
                     <tr>
                         <td colspan="2">
@@ -46,34 +68,61 @@
                     </tr>
                     <tr>
                         <td align="right">
-                          @Html.DisplayNameFor(m => m.Cat)
+                          @Html.DisplayNameFor(m => m.Id)
                         </td>
                         <td>
-                             
-                            @Html.DropDownListFor(m => m.Cat, new SelectList(Model.Cat, "Id", "CategoryName") , new
-                            {
-                            @class = "form-control", @id = "ddlCat", @style = "width:200px;", @onchange = "javascript:GetSubCategory(this.value);"
-                            })
-                            
-                            <select class="form-control" id="ddlsub" name="ddlsub" style="width: 200px">
-
-                            </select>
-                            
+                            @{
+                                List<SelectListItem> listItems = new List<SelectListItem>();
+                                listItems.Add(new SelectListItem
+                                {
+                                    Text = "-- Select --",
+                                    Value = "0",
+                                    Selected = true
+                                });
+                                listItems.Add(new SelectListItem
+                                {
+                                    Text = "Football",
+                                    Value = "1"
+                                });
+                                listItems.Add(new SelectListItem
+                                {
+                                    Text = "Formula1",
+                                    Value = "2",
+                                });
+                                listItems.Add(new SelectListItem
+                                {
+                                    Text = "Cricket",
+                                    Value = "3"
+                                });
+                                listItems.Add(new SelectListItem
+                                {
+                                    Text = "Tennis",
+                                    Value = "4"
+                                });
+                                listItems.Add(new SelectListItem
+                                {
+                                    Text = "Athletics",
+                                    Value = "5"
+                                });
+                            } 
+                            @Html.DropDownListFor(m => m.Id, listItems,
+                        new { @class = "form-control",
+                            @onchange = "javascript:GetSubCat(this.value);"
+                        })
+                           
+                                       
                         </td>
                     </tr>
-
                     <tr>
                         <td align="right">
                             @Html.DisplayNameFor(m => m.Subcategory)
                         </td>
                         <td>
-                            @Html.EditorFor(m => m.Subcategory, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-
-                        <td>
-                            @Html.ValidationMessageFor(m => m.Subcategory)
+                            <select class="form-control" id="ddlsub" name="ddlsub"></select>
                         </td>
                     </tr>
+
+                  
                     <tr>
                         <td align="right">
                             @Html.DisplayNameFor(m => m.Heading)
@@ -112,7 +161,8 @@
                             @Html.DisplayNameFor(m => m.LongDesc)
                         </td>
                         <td>
-                            @Html.EditorFor(m => m.LongDesc, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.TextAreaFor(m => m.LongDesc, new { rows = 8, columns = 100, @style ="width:400px;" })
+                         @* @Html.EditorFor(m => m.LongDesc, new { htmlAttributes = new { @class = "form-control", @style = "height:100px" } })*@  
                         </td>
                         <td>
                             @Html.ValidationMessageFor(m => m.LongDesc)
@@ -128,10 +178,16 @@
                                 <table border="0" style="width:100%; border-collapse:separate;">
                                     <tr>
                                         <td width="45%">
-                                            <input type="submit" class="btn btn-success" value="Register" id="btnRegister" name="btnRegister" style="width:95%" />
+                                            <input type="submit" class="btn btn-success" value="Add" id="btnRegister" name="btnRegister" style="width:95%" />
                                         </td>
                                         <td width="45%">
                                             <input type="reset" class="btn btn-default" value="Reset" id="btnResetReg" name="btnResetReg" style="width:100%" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" valign="bottom">
+                                            <hr style="border-color:#0000FF; border-width:3px" />
+                                            @Html.ValueFor(m => m.Status)
                                         </td>
                                     </tr>
                                 </table>
@@ -140,7 +196,7 @@
                         <td></td>
                     </tr>
                 </table>
-
+               
                 </div>
             </div>
                 }

@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Web;
 
 namespace SportsWebsite.Models
 {
-    public class LoginModel : IEntity
+    public class LoginModel
     {
         [Required(ErrorMessage = "Username is required..")]
         [Display(Name = "User name")]
@@ -21,6 +22,6 @@ namespace SportsWebsite.Models
 
         public string Status { get; set; }
 
-        public void SetFields(DataRow )
+      
     }
 }
